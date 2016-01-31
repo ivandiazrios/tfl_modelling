@@ -1,0 +1,1 @@
+{"nature_results": {"Traffic Island Link At Junction": {"mae": 21.076608693749904, "mse": 487.99380000270247, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}, "Single Carriageway": {"mae": 34.921707615408081, "mse": 1262.0369656549094, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}}, "street_tally": [2.0, 0.0, 0.0]}

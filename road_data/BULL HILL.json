@@ -1,0 +1,1 @@
+{"nature_results": {"Single Carriageway": {"mae": 15.511089990323605, "mse": 285.66640240845885, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}, "Dual Carriageway": {"mae": 928.49792856606803, "mse": 18925264.781033367, "best_function": 1, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}}, "street_tally": [1.0, 1.0, 0.0]}

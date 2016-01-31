@@ -1,0 +1,1 @@
+{"nature_results": {"Single Carriageway": {"avg_speed": {"mae": 5.9806019550802656, "mse": 61.307123537420431, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}}}, "street_tally": [0.0, 0.0, 0.0]}

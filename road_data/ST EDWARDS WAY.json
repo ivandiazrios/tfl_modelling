@@ -1,0 +1,1 @@
+{"nature_results": {"Dual Carriageway": {"mae": 23.727179595139145, "mse": 609.39229019257414, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}, "Roundabout": {"mae": 17.418730233745539, "mse": 368.89703338918872, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}}, "street_tally": [2.0, 0.0, 0.0]}

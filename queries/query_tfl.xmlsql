@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE xmlsql SYSTEM "xmlsql.dtd">
+ 
+<xmlsql>
+
+<query label="rainfall per link" ignore="true">
+<sql>
+SELECT *
+FROM   itn_link
+WHERE  classification='A3'
+AND    street LIKE 'ROBIN%'
+AND    snode=11916
+</sql>
+</query>
+
+<query label="rainfall per link" ignore="true">
+<sql>
+SELECT *
+FROM   itn_link
+WHERE  classification='A4'
+AND    street LIKE 'STRAND'
+AND    snode=24180
+</sql>
+</query>
+
+<query label="rainfall test" ignore="true">
+<sql>
+SELECT (os_grid[0])[0] AS x1,(os_grid[0])[1] AS y1,*
+FROM   rainfall
+WHERE  (os_grid[0])[1] BETWEEN 530000 AND 531000
+AND    (os_grid[0])[0] BETWEEN 181000 AND 182000
+LIMIT  10
+</sql>
+</query>
+
+<query label="rainfall per link (v1)" ignore="true">
+<sql>
+SELECT *
+FROM   itn_link
+       JOIN rainfall
+       -- the road intersects the rainfall box
+       ON   itn_link.path ?# rainfall.os_grid 
+       JOIN traffic_count
+       ON   traffic_count.toid=itn_link.toid
+       -- rainfall period should be within traffic count period
+       AND  traffic_count.period @> rainfall.period
+WHERE  snode=7766
+</sql>
+</query>
+
+<query label="rainfall per link (v2)" ignore="true">
+<sql>
+SELECT itn_link.toid,
+       itn_link.street,
+       itn_link.classification,
+       traffic_count.period,
+       traffic_count.journey_time,
+       rainfall.depth
+FROM   itn_link
+       JOIN traffic_count
+       ON   traffic_count.toid=itn_link.toid
+       JOIN rainfall
+       -- the road intersects the rainfall box
+       ON   itn_link.path ?# rainfall.os_grid 
+       -- rainfall period should be within traffic count period
+       AND  traffic_count.period @> rainfall.period
+WHERE  snode=7766
+       
+ORDER BY rainfall.depth       
+</sql>
+</query>
+
+<query label="rainfall per link (v3)" ignore="false">
+<sql>
+SELECT itn_link.toid,
+       itn_link.street,
+       itn_link.classification,
+       traffic_count.period,
+       traffic_count.journey_time,
+       rainfall.depth
+FROM   itn_link
+       JOIN traffic_count
+       ON   traffic_count.toid=itn_link.toid
+       JOIN rainfall
+       -- the road intersects the rainfall box
+       ON   itn_link.path ?# rainfall.os_grid 
+       -- rainfall period should be within traffic count period
+       AND  traffic_count.period @> rainfall.period
+WHERE  traffic_count.toid='4000000030090279A'       
+ORDER BY rainfall.depth       
+</sql>
+</query>
+
+<query label="test" ignore="true">
+<sql>
+SELECT *
+FROM   itn_link
+       JOIN traffic_count
+       ON   traffic_count.toid=itn_link.toid
+--WHERE  snode=24180
+</sql>
+</query>
+
+</xmlsql>
+

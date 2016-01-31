@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE xmlsql SYSTEM "xmlsql.dtd">
+ 
+<xmlsql>
+
+<retract construct="table" name="raw.traffic_count"/>
+
+<update label="raw traffic_count" ignore="false">
+CREATE TABLE raw.traffic_count
+(   toid VARCHAR(17) CONSTRAINT traffic_count_toid_fk REFERENCES raw.itn_link,
+    id INTEGER, 
+    date DATE NOT NULL,
+    period_15min SMALLINT NOT NULL,
+    number SMALLINT NOT NULL,
+    journey_time INTEGER NOT NULL
+    --CONSTRAINT traffic_count_pk PRIMARY KEY (id,date,period_15min)
+)
+</update>
+
+</xmlsql>
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE xmlsql SYSTEM "xmlsql.dtd">
+ 
+<xmlsql>
+
+<retract construct="table" name="raw.rainfall"/>
+
+<update label="raw rainfall" ignore="false">
+CREATE TABLE raw.rainfall
+(   depth DECIMAL(8,4) NOT NULL, 
+    os_grid CHAR(9) NOT NULL,
+    period_5min TIMESTAMP NOT NULL,
+    CONSTRAINT raw_rainfall_pk PRIMARY KEY (depth,os_grid,period_5min)
+)
+</update>
+
+</xmlsql>
+

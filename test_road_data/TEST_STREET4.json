@@ -1,0 +1,8 @@
+{
+  "nature_results":
+    {
+      "Single Carriageway": {"mae": 7.3628557856064907, "mse": 89.605756044091308, "best_function": 1, "parameters": [43.9]},
+      "Slip Road": {"mae": 5.3575429339289844, "mse": 50.903266586290961, "best_function": 0, "parameters": [31.1]}
+    },
+  "street_tally": [0.0, 1.0, 1.0]
+}

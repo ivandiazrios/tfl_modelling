@@ -1,0 +1,1 @@
+{"nature_results": {"Single Carriageway": {"mae": 18.151574511514145, "mse": 443.92602588215067, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}, "Traffic Island Link": {"mae": 10.710499306373864, "mse": 239.56736709184597, "best_function": 0, "parameters": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]}}, "street_tally": [2.0, 0.0, 0.0]}

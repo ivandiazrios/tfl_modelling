@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+
+<!DOCTYPE xmlsql SYSTEM "xmlsql.dtd">
+ 
+<xmlsql>
+
+<retract construct="schema" name="raw"/>
+<retract construct="table" name="raw.itn_node"/>
+<retract construct="table" name="raw.itn_link"/>
+<retract construct="table" name="itn_node"/>
+<retract construct="table" name="itn_link"/>
+
+<update label="raw schema" ignore="false">
+CREATE SCHEMA raw
+</update>
+
+
+<update label="raw itn_node" ignore="false">
+CREATE TABLE raw.itn_node
+(   itn_id INTEGER CONSTRAINT raw_itn_node_pk PRIMARY KEY, 
+    easting DECIMAL(12,6) NOT NULL,
+    northing DECIMAL(12,6) NOT NULL
+)
+</update>
+
+<update label="itn_node" ignore="false">
+CREATE TABLE itn_node
+(   itn_id INTEGER CONSTRAINT itn_node_pk PRIMARY KEY, 
+    os_coord POINT NOT NULL
+)
+</update>
+
+
+<update label="raw itn_link" ignore="false">
+CREATE TABLE raw.itn_link
+(   toid VARCHAR(17) CONSTRAINT raw_itn_link_pk PRIMARY KEY,
+    street VARCHAR(80),
+    classification VARCHAR(7),
+    description VARCHAR(35),
+    length FLOAT,
+    startx INT,
+    starty INT,
+    endx INT,
+    endy INT,
+    snode INTEGER CONSTRAINT itn_link_start_fk REFERENCES raw.itn_node,
+    enode INTEGER CONSTRAINT itn_link_end_fk REFERENCES raw.itn_node,
+    nature VARCHAR(35),
+    highway_authority VARCHAR(10),
+    srn CHAR(1),
+    area SMALLINT,
+    borough VARCHAR(20),
+    major CHAR(1),
+    cp INT,
+    link_no SMALLINT,
+    year INT,
+    amv_am_flow FLOAT,
+    amv_inter_flow FLOAT,
+    amv_pm_flow FLOAT,
+    amv_on_flow INT
+)
+</update>
+
+<update label="itn_link" ignore="false">
+CREATE TABLE itn_link
+(   toid VARCHAR(17) CONSTRAINT itn_link_pk PRIMARY KEY,
+    street VARCHAR(80),
+    classification VARCHAR(7),
+    description VARCHAR(35),
+    length FLOAT,
+    path LSEG,
+    snode INTEGER CONSTRAINT itn_link_start_fk REFERENCES itn_node,
+    enode INTEGER CONSTRAINT itn_link_end_fk REFERENCES itn_node,
+    nature VARCHAR(35),
+    highway_authority VARCHAR(10),
+    srn CHAR(1),
+    area SMALLINT,
+    borough VARCHAR(20),
+    major CHAR(1),
+    cp INT,
+    link_no SMALLINT,
+    year INT,
+    amv_am_flow FLOAT,
+    amv_inter_flow FLOAT,
+    amv_pm_flow FLOAT,
+    amv_on_flow INT
+)
+</update>
+
+
+<import label="read itn node" file="/vol/automed/data/tfl/TrafficMaster/2013-14 Base ITN network Nodes.MID" format="csv" table="raw.itn_node" ignore="false" header="false"/>
+
+<import label="read itn link" file="/vol/automed/data/tfl/TrafficMaster/2012-13 ITN NOI links with 2012 flows.MID" format="csv" table="raw.itn_link" ignore="false" header="false"/>
+
+<update label="itn_node populate" ignore="false">
+  INSERT INTO itn_node(itn_id,os_coord)
+  SELECT itn_id,
+         POINT(easting,northing) AS os_coord
+  FROM   raw.itn_node
+</update>
+
+<update label="itn_link populate" ignore="false">
+INSERT INTO itn_link(toid,street,classification,description,length,
+    path,snode,enode,nature,highway_authority,srn,area,
+    borough,major,cp,link_no,year,
+    amv_am_flow,amv_inter_flow,amv_pm_flow,amv_on_flow)
+SELECT toid,street,classification,description,length,
+    LSEG(POINT(startx,starty),POINT(endx,endy)) AS path,snode,enode,
+    nature,highway_authority,srn,area,
+    borough,major,cp,link_no,year,
+    amv_am_flow,amv_inter_flow,amv_pm_flow,amv_on_flow
+FROM raw.itn_link
+</update>
+
+</xmlsql>
+

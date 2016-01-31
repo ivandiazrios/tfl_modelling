@@ -1,0 +1,22 @@
+SELECT itn_link.toid,
+       itn_link.street,
+       itn_link.classification,
+       traffic_count.period,
+       traffic_count.journey_time,
+       rainfall.depth
+FROM   itn_link
+       JOIN traffic_count
+       ON   traffic_count.toid=itn_link.toid
+       LEFT JOIN rainfall
+       -- the road intersects the rainfall box
+       ON   itn_link.path ?# rainfall.os_grid 
+       -- rainfall period should be within traffic count period
+       AND  traffic_count.period @> rainfall.period
+WHERE  traffic_count.toid=''       
+ORDER BY rainfall.depth;
+
+some A23 node (less data, lighter query):
+4000000030090279A
+Henry's M25 fragment:
+4000000031091999A
+
